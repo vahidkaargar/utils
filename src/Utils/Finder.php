@@ -255,6 +255,15 @@ class Finder implements \IteratorAggregate
 	/********************* iterator generator ****************d*g**/
 
 
+	/**
+	 * Returns an array with all found files and directories.
+	 */
+	public function collect(): array
+	{
+		return iterator_to_array($this->getIterator());
+	}
+
+
 	/** @return \Generator<string, FileInfo> */
 	public function getIterator(): \Generator
 	{
