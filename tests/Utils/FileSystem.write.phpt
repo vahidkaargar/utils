@@ -18,10 +18,14 @@ test('write + read', function () {
 	Assert::same('Hello', FileSystem::read(getTempDir() . '/2/file'));
 });
 
-Assert::exception(function () {
-	FileSystem::write('', 'Hello');
-}, Nette\IOException::class, "Unable to create directory '' with mode 777.%A%");
+Assert::exception(
+	fn() => FileSystem::write('', 'Hello'),
+	Nette\IOException::class,
+	"Unable to create directory '' with mode 777.%A%",
+);
 
-Assert::exception(function () {
-	FileSystem::read('missing');
-}, Nette\IOException::class, "Unable to read file 'missing'. %a%");
+Assert::exception(
+	fn() => FileSystem::read('missing'),
+	Nette\IOException::class,
+	"Unable to read file 'missing'. %a%",
+);
