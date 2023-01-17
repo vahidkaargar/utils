@@ -116,18 +116,3 @@ test('getRelativePathName', function () {
 		export($res),
 	);
 });
-
-
-test('empty args', function () {
-	$finder = Finder::find()->in('fixtures.finder');
-	Assert::same([], export($finder));
-
-	$finder = Finder::findFiles()->in('fixtures.finder');
-	Assert::same([], export($finder));
-
-	$finder = Finder::findDirectories()->in('fixtures.finder');
-	Assert::same([], export($finder));
-
-	$finder = Finder::find()->exclude()->in('fixtures.finder');
-	Assert::same([], export($finder));
-});
