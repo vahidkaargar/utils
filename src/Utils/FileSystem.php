@@ -258,4 +258,24 @@ final class FileSystem
 	{
 		return self::normalizePath(implode('/', $paths));
 	}
+
+
+	/**
+	 * Converts backslashes to slashes.
+	 */
+	public static function unixSlashes(string $path): string
+	{
+		return strtr($path, '\\', '/');
+	}
+
+
+	/**
+	 * Converts slashes to platform-specific directory separators.
+	 */
+	public static function platformSlashes(string $path): string
+	{
+		return DIRECTORY_SEPARATOR === '/'
+			? strtr($path, '\\', '/')
+			: str_replace(':\\\\', '://', strtr($path, '/', '\\')); // protocol://
+	}
 }
