@@ -72,21 +72,38 @@ class Finder implements \IteratorAggregate
 
 
 	/**
-	 * Creates filtering group by mask & type selector.
+	 * Finds files matching the specified masks.
 	 */
-	private function select(array $masks, string $type): static
+	public function files(string|array $masks): static
+	{
+		return $this->select((array) $masks, 'file');
+	}
+
+
+	/**
+	 * Finds directories matching the specified masks.
+	 */
+	public function directories(string|array $masks): static
+	{
+		return $this->select((array) $masks, 'dir');
+	}
+
+
+	private function select(array $masks, string $mode): static
 	{
 		foreach ($masks as $mask) {
 			$mask = FileSystem::unixSlashes($mask);
-			if ($mask === '') {
+			if ($mode === 'dir') {
+				$mask = rtrim($mask, '/');
+			}
+			if ($mask === '' || ($mode === 'file' && str_ends_with($mask, '/'))) {
 				throw new Nette\InvalidArgumentException("Invalid mask '$mask'");
 			}
 			if (str_starts_with($mask, '**/')) {
 				$mask = substr($mask, 3);
 			}
-			$this->find[] = [$mask, $type];
+			$this->find[] = [$mask, $mode];
 		}
-
 		return $this;
 	}
 
