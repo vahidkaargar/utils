@@ -47,7 +47,7 @@ class Finder implements \IteratorAggregate
 	public static function find(string|array $masks): static
 	{
 		$masks = is_array($masks) ? $masks : func_get_args(); // compatibility with variadic
-		return (new static)->select($masks, 'isDir')->select($masks, 'isFile');
+		return (new static)->addMasks($masks, 'file')->addMasks($masks, 'dir');
 	}
 
 
@@ -57,7 +57,7 @@ class Finder implements \IteratorAggregate
 	public static function findFiles(string|array $masks): static
 	{
 		$masks = is_array($masks) ? $masks : func_get_args(); // compatibility with variadic
-		return (new static)->select($masks, 'isFile');
+		return (new static)->addMasks($masks, 'file');
 	}
 
 
@@ -67,26 +67,43 @@ class Finder implements \IteratorAggregate
 	public static function findDirectories(string|array $masks): static
 	{
 		$masks = is_array($masks) ? $masks : func_get_args(); // compatibility with variadic
-		return (new static)->select($masks, 'isDir');
+		return (new static)->addMasks($masks, 'dir');
 	}
 
 
 	/**
-	 * Creates filtering group by mask & type selector.
+	 * Finds files matching the specified masks.
 	 */
-	private function select(array $masks, string $type): static
+	public function files(string|array $masks): static
+	{
+		return $this->addMasks((array) $masks, 'file');
+	}
+
+
+	/**
+	 * Finds directories matching the specified masks.
+	 */
+	public function directories(string|array $masks): static
+	{
+		return $this->addMasks((array) $masks, 'dir');
+	}
+
+
+	private function addMasks(array $masks, string $mode): static
 	{
 		foreach ($masks as $mask) {
 			$mask = FileSystem::unixSlashes($mask);
-			if ($mask === '') {
+			if ($mode === 'dir') {
+				$mask = rtrim($mask, '/');
+			}
+			if ($mask === '' || ($mode === 'file' && str_ends_with($mask, '/'))) {
 				throw new Nette\InvalidArgumentException("Invalid mask '$mask'");
 			}
 			if (str_starts_with($mask, '**/')) {
 				$mask = substr($mask, 3);
 			}
-			$this->find[] = [$mask, $type];
+			$this->find[] = [$mask, $mode];
 		}
-
 		return $this;
 	}
 
@@ -287,7 +304,7 @@ class Finder implements \IteratorAggregate
 			$relativePathname = FileSystem::unixSlashes($file->getRelativePathname());
 			foreach ($searches as $search) {
 				if (
-					$file->{$search->mode}()
+					$file->{"is{$search->mode}"}()
 					&& preg_match($search->pattern, $relativePathname)
 					&& $this->proveFilters($this->filters, $file, $cache)
 				) {
