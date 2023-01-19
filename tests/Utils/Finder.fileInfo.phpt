@@ -44,3 +44,16 @@ test('relative path', function () {
 	Assert::same('subdir', $files[1]->getRelativePath());
 	Assert::same("subdir{$ds}file.txt", $files[1]->getRelativePathname());
 });
+
+
+test('read', function () {
+	$file = new FileInfo('fixtures.finder/file.txt');
+	Assert::true(str_starts_with($file->read(), 'File for testing purposes'));
+});
+
+
+test('write', function () {
+	$file = new FileInfo(getTempDir() . '/foo');
+	$file->write('foo');
+	Assert::same('foo', $file->read());
+});
