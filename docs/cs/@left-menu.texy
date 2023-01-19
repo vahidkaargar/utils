@@ -1,0 +1,32 @@
+
+
+Balíček nette/utils
+-------------------
+- [Pole |arrays]
+- [Callbacky |callback]
+- [Datum a čas |datetime]
+- [Souborový systém |filesystem]
+- [Pomocné funkce |helpers]
+- [HTML elementy |html-elements]
+- [Obrázky |images]
+- [JSON]
+- [Paginator |paginator]
+- [Náhodné řetězce |random]
+- [SmartObject |smartobject]
+- [PHP Reflexe |reflection]
+- [Řetězce |strings]
+- [Floats]
+- [PHP typy |type]
+- [Validátor |validators]
+
+
+Další nástroje
+--------------
+- [NEON|/neon/@home]
+- [Finder]
+- [Hashování hesel |/security/passwords]
+- [Parsování a skládání URL |/http/urls]
+- [SafeStream |/Safe-Stream/@home]
+- [RobotLoader |/Robot-Loader/@home]
+- [Schema |/schema/@home]
+- [Generátor PHP kódu |/php-generator/@home]

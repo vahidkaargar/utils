@@ -1,0 +1,44 @@
+Utilities
+*********
+
+.[perex]
+In package `nette/utils` you will find a set of useful classes for everyday use:
+
+| [PHP Object Enhancements |smartobject] | Nette\SmartObject
+| [Images] | Nette\Utils\Image
+| [Paginator] | Nette\Utils\Paginator
+| [Validators] | Nette\Utils\Validators
+| [Strings] | Nette\Utils\Strings
+| [Comparing floats |floats] | Nette\Utils\Floats
+| [Callback] | Nette\Utils\Callback
+| [Arrays] | Nette\Utils\Arrays
+| [Date and Time |datetime] | Nette\Utils\DateTime
+| [Generate HTML Code |html-elements] | Nette\Utils\Html
+| [Generate Random Strings |random] | Nette\Utils\Random
+| [PHP Reflection  |reflection] | Nette\Utils\Reflection
+| [JSON] | Nette\Utils\Json
+| [Filesystem |filesystem] | Nette\Utils\FileSystem
+| [Helper Functions |helpers] | Nette\Utils\Helpers
+| [Types |type] | Nette\Utils\Type
+
+
+Installation
+------------
+
+Download and install the package using [Composer|/best-practices/composer]:
+
+```shell
+composer require nette/utils
+```
+
+| version   | compatible with PHP
+|-----------|-------------------
+| Nette Utils 4.0 | PHP 8.0 – 8.2
+| Nette Utils 3.2 | PHP 7.2 – 8.2
+| Nette Utils 3.0 – 3.1 | PHP 7.1 – 8.0
+| Nette Utils 2.5 | PHP 5.6 – 8.0
+
+Applies to the latest patch versions.
+
+
+{{composer: nette/utils}}

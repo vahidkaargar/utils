@@ -1,0 +1,22 @@
+Generování náhodných řetězců
+****************************
+
+.[perex]
+[api:Nette\Utils\Random] je statická třída pro generování kryptograficky bezpečných pseudonáhodných řetězců.
+
+→ [Instalace a požadavky |@home#Instalace]
+
+
+generate(int $length=10, string $charlist=`'0-9a-z'`): string .[method]
+-----------------------------------------------------------------------
+
+Vygeneruje náhodný řetězec o dané délce ze znaků specifikovaných parametrem `$charlist`. Lze používat i intervaly zapsané jako třeba `0-9`.
+
+```php
+use Nette\Utils\Random;
+
+Random::generate(10);       // '6zq3a1nl8n'
+Random::generate(5, 'A-Z'); // 'HLKUR'
+```
+
+{{composer: nette/utils}}
