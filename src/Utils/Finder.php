@@ -43,33 +43,30 @@ class Finder implements \IteratorAggregate
 
 	/**
 	 * Begins search for files and directories matching mask.
-	 * @param  string  ...$masks
 	 */
-	public static function find(...$masks): static
+	public static function find(string|array $masks): static
 	{
-		$masks = is_array($tmp = reset($masks)) ? $tmp : $masks;
+		$masks = is_array($masks) ? $masks : func_get_args(); // compatibility with variadic
 		return (new static)->select($masks, 'dir')->select($masks, 'file');
 	}
 
 
 	/**
 	 * Begins search for files matching mask.
-	 * @param  string  ...$masks
 	 */
-	public static function findFiles(...$masks): static
+	public static function findFiles(string|array $masks): static
 	{
-		$masks = is_array($tmp = reset($masks)) ? $tmp : $masks;
+		$masks = is_array($masks) ? $masks : func_get_args(); // compatibility with variadic
 		return (new static)->select($masks, 'file');
 	}
 
 
 	/**
 	 * Begins search for directories matching mask.
-	 * @param  string  ...$masks
 	 */
-	public static function findDirectories(...$masks): static
+	public static function findDirectories(string|array $masks): static
 	{
-		$masks = is_array($tmp = reset($masks)) ? $tmp : $masks;
+		$masks = is_array($masks) ? $masks : func_get_args(); // compatibility with variadic
 		return (new static)->select($masks, 'dir');
 	}
 
@@ -96,11 +93,10 @@ class Finder implements \IteratorAggregate
 
 	/**
 	 * Searches in the given directories. Wildcards are allowed.
-	 * @param  string  ...$paths
 	 */
-	public function in(...$paths): static
+	public function in(string|array $paths): static
 	{
-		$paths = is_array($tmp = reset($paths)) ? $tmp : $paths;
+		$paths = is_array($paths) ? $paths : func_get_args(); // compatibility with variadic
 		$this->addWhere($paths, '');
 		return $this;
 	}
@@ -108,11 +104,10 @@ class Finder implements \IteratorAggregate
 
 	/**
 	 * Searches recursively from the given directories. Wildcards are allowed.
-	 * @param  string  ...$paths
 	 */
-	public function from(...$paths): static
+	public function from(string|array $paths): static
 	{
-		$paths = is_array($tmp = reset($paths)) ? $tmp : $paths;
+		$paths = is_array($paths) ? $paths : func_get_args(); // compatibility with variadic
 		$this->addWhere($paths, '/**');
 		return $this;
 	}
@@ -145,11 +140,10 @@ class Finder implements \IteratorAggregate
 
 	/**
 	 * Skips entries that matches the given masks relative to the ones defined with the in() or from() methods.
-	 * @param  string  ...$masks
 	 */
-	public function exclude(...$masks): static
+	public function exclude(string|array $masks): static
 	{
-		$masks = is_array($tmp = reset($masks)) ? $tmp : $masks;
+		$masks = is_array($masks) ? $masks : func_get_args(); // compatibility with variadic
 		foreach ($masks as $mask) {
 			$mask = FileSystem::unixSlashes($mask);
 			if (!preg_match('~^/?(\*\*/)?(.+)(/\*\*|/\*|/|)$~D', $mask, $m)) {
