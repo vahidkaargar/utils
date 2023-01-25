@@ -177,6 +177,26 @@ final class FileSystem
 
 
 	/**
+	 * Reads the file content line by line.
+	 * @return \Generator<int, string>
+	 * @throws Nette\IOException  on error occurred
+	 */
+	public static function readLines(string $file, bool $stripNewLines = true): \Generator
+	{
+		return (function ($f) use ($stripNewLines) {
+			$counter = 0;
+			while (($line = fgets($f)) !== false) {
+				if ($stripNewLines) {
+					$line = rtrim($line, "\r\n");
+				}
+				yield $counter++ => $line;
+			}
+			fclose($f);
+		})(static::open($file, 'r'));
+	}
+
+
+	/**
 	 * Writes the string to a file.
 	 * @throws Nette\IOException  on error occurred
 	 */
